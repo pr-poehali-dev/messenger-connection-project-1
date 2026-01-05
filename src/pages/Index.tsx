@@ -44,10 +44,10 @@ const Index = () => {
   const [selectedChat, setSelectedChat] = useState<number | null>(1);
 
   const chats: Chat[] = [
-    { id: 1, name: 'Легенды Арены', lastMessage: 'GG! Отличная игра 🎮', time: '14:32', unread: 3, avatar: '🏆', level: 45 },
-    { id: 2, name: 'Команда Победителей', lastMessage: 'Завтра в 20:00 турнир', time: '13:15', unread: 0, avatar: '⚔️', level: 38 },
-    { id: 3, name: 'Cyber Squad', lastMessage: 'Собираемся на рейд?', time: '12:48', unread: 7, avatar: '🎯', level: 52 },
-    { id: 4, name: 'Гильдия Драконов', lastMessage: 'Новый квест открыт!', time: '11:20', unread: 0, avatar: '🐉', level: 41 },
+    { id: 1, name: 'Игра', lastMessage: 'GG! Отличная игра 🎮', time: '14:32', unread: 3, avatar: '🎮', level: 45 },
+    { id: 2, name: 'Общение', lastMessage: 'Завтра в 20:00 турнир', time: '13:15', unread: 0, avatar: '💬', level: 38 },
+    { id: 3, name: 'Планы', lastMessage: 'Собираемся на рейд?', time: '12:48', unread: 7, avatar: '📋', level: 52 },
+    { id: 4, name: 'Команды', lastMessage: 'Новый квест открыт!', time: '11:20', unread: 0, avatar: '👥', level: 41 },
   ];
 
   const contacts: Contact[] = [
@@ -116,10 +116,10 @@ const Index = () => {
       <Card className="lg:col-span-2 p-6 flex flex-col h-[calc(100vh-180px)]">
         <div className="flex items-center gap-3 pb-4 border-b border-border">
           <Avatar className="h-10 w-10 bg-primary/30 text-xl">
-            <AvatarFallback>🏆</AvatarFallback>
+            <AvatarFallback>🎮</AvatarFallback>
           </Avatar>
           <div>
-            <h2 className="font-bold">Легенды Арены</h2>
+            <h2 className="font-bold">Игра</h2>
             <p className="text-xs text-muted-foreground">12 участников онлайн</p>
           </div>
         </div>
