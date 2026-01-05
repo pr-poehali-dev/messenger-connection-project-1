@@ -8,7 +8,7 @@ import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import Icon from '@/components/ui/icon';
 
-type TabType = 'chats' | 'contacts' | 'profile' | 'settings';
+type TabType = 'chats' | 'contacts' | 'profile' | 'settings' | 'premium';
 
 interface Chat {
   id: number;
@@ -42,6 +42,7 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState<TabType>('chats');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedChat, setSelectedChat] = useState<number | null>(1);
+  const [isPremium, setIsPremium] = useState(false);
 
   const chats: Chat[] = [
     { id: 1, name: 'Игра', lastMessage: 'GG! Отличная игра 🎮', time: '14:32', unread: 3, avatar: '🎮', level: 45 },
@@ -211,13 +212,22 @@ const Index = () => {
             </Badge>
           </div>
           <div className="flex-1 text-center md:text-left">
-            <h1 className="text-3xl font-bold mb-2">ProGamer2024</h1>
-            <p className="text-muted-foreground mb-4">Мастер общения</p>
+            <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
+              <h1 className="text-3xl font-bold">ProGamer2024</h1>
+              {isPremium && (
+                <span className="text-3xl animate-pulse-glow">👑</span>
+              )}
+            </div>
+            <p className="text-muted-foreground mb-4">
+              {isPremium ? '⭐ Premium Легенда' : 'Мастер общения'}
+            </p>
             <div className="space-y-2">
               <div>
                 <div className="flex justify-between text-sm mb-1">
                   <span>До следующего уровня</span>
-                  <span className="text-primary font-semibold">2,340 / 5,000 XP</span>
+                  <span className="text-primary font-semibold">
+                    2,340 / 5,000 XP {isPremium && '(x2 скорость)'}
+                  </span>
                 </div>
                 <Progress value={46} className="h-3" />
               </div>
@@ -323,6 +333,141 @@ const Index = () => {
     </Card>
   );
 
+  const renderPremium = () => (
+    <div className="max-w-5xl mx-auto">
+      <div className="text-center mb-8">
+        <div className="inline-block mb-4">
+          <div className="text-7xl animate-pulse-glow">👑</div>
+        </div>
+        <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent">
+          GameChat Premium
+        </h1>
+        <p className="text-xl text-muted-foreground">
+          Получи максимум от общения — стань легендой!
+        </p>
+      </div>
+
+      {!isPremium ? (
+        <>
+          <Card className="p-8 mb-6 bg-gradient-to-br from-yellow-500/10 via-orange-500/10 to-primary/10 border-yellow-500/30">
+            <div className="text-center mb-8">
+              <div className="text-4xl font-bold mb-2">
+                <span className="text-yellow-400">499₽</span>
+                <span className="text-muted-foreground text-2xl">/месяц</span>
+              </div>
+              <p className="text-muted-foreground">или 4990₽/год (экономия 30%)</p>
+            </div>
+
+            <Button 
+              className="w-full py-6 text-lg font-bold bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700 text-black"
+              onClick={() => setIsPremium(true)}
+            >
+              🚀 Получить Premium
+            </Button>
+          </Card>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <Card className="p-6 hover:scale-[1.02] transition-all border-primary/30">
+              <div className="flex items-start gap-4">
+                <div className="text-4xl">👑</div>
+                <div>
+                  <h3 className="font-bold text-lg mb-2">Эксклюзивный статус</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Золотая корона возле имени, уникальные бейджи и рамки профиля
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6 hover:scale-[1.02] transition-all border-accent/30">
+              <div className="flex items-start gap-4">
+                <div className="text-4xl">⚡</div>
+                <div>
+                  <h3 className="font-bold text-lg mb-2">Ускоренный рост</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Получай в 2 раза больше опыта и быстрее прокачивайся
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6 hover:scale-[1.02] transition-all border-secondary/30">
+              <div className="flex items-start gap-4">
+                <div className="text-4xl">🎨</div>
+                <div>
+                  <h3 className="font-bold text-lg mb-2">Уникальные темы</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Доступ к эксклюзивным темам оформления и анимациям
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6 hover:scale-[1.02] transition-all border-primary/30">
+              <div className="flex items-start gap-4">
+                <div className="text-4xl">💎</div>
+                <div>
+                  <h3 className="font-bold text-lg mb-2">Премиум контент</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Эксклюзивные эмодзи, стикеры и достижения
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6 hover:scale-[1.02] transition-all border-accent/30">
+              <div className="flex items-start gap-4">
+                <div className="text-4xl">🚀</div>
+                <div>
+                  <h3 className="font-bold text-lg mb-2">Больше возможностей</h3>
+                  <p className="text-sm text-muted-foreground">
+                    До 100 чатов, 500 друзей и безлимитные сообщения
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6 hover:scale-[1.02] transition-all border-secondary/30">
+              <div className="flex items-start gap-4">
+                <div className="text-4xl">📊</div>
+                <div>
+                  <h3 className="font-bold text-lg mb-2">Расширенная статистика</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Подробная аналитика активности и прогресса
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </>
+      ) : (
+        <Card className="p-8 text-center bg-gradient-to-br from-yellow-500/10 via-orange-500/10 to-primary/10 border-yellow-500/30">
+          <div className="text-6xl mb-4 animate-scale-in">🎉</div>
+          <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
+            Добро пожаловать в Premium!
+          </h2>
+          <p className="text-lg text-muted-foreground mb-6">
+            Теперь ты — легенда GameChat! Все премиум-функции активированы.
+          </p>
+          <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+            <div className="p-4 bg-muted rounded-lg">
+              <div className="text-3xl mb-2">👑</div>
+              <div className="text-sm font-semibold">Статус активен</div>
+            </div>
+            <div className="p-4 bg-muted rounded-lg">
+              <div className="text-3xl mb-2">⚡</div>
+              <div className="text-sm font-semibold">x2 опыта</div>
+            </div>
+            <div className="p-4 bg-muted rounded-lg">
+              <div className="text-3xl mb-2">💎</div>
+              <div className="text-sm font-semibold">Всё разблокировано</div>
+            </div>
+          </div>
+        </Card>
+      )}
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-background">
       <div className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
@@ -332,6 +477,11 @@ const Index = () => {
               GameChat
             </h1>
             <div className="flex items-center gap-2">
+              {isPremium && (
+                <Badge className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black font-bold animate-pulse-glow">
+                  👑 PREMIUM
+                </Badge>
+              )}
               <Badge className="bg-gradient-to-r from-primary to-accent">
                 🔥 42 LVL
               </Badge>
@@ -383,6 +533,14 @@ const Index = () => {
               <Icon name="Settings" size={18} />
               Настройки
             </Button>
+            <Button
+              variant={activeTab === 'premium' ? 'default' : 'outline'}
+              onClick={() => setActiveTab('premium')}
+              className={`gap-2 ${activeTab !== 'premium' ? 'border-yellow-500/50 hover:bg-yellow-500/10' : 'bg-gradient-to-r from-yellow-400 to-yellow-600 text-black border-none'}`}
+            >
+              <Icon name="Crown" size={18} />
+              Premium
+            </Button>
           </div>
         </div>
       </div>
@@ -392,6 +550,7 @@ const Index = () => {
         {activeTab === 'contacts' && renderContacts()}
         {activeTab === 'profile' && renderProfile()}
         {activeTab === 'settings' && renderSettings()}
+        {activeTab === 'premium' && renderPremium()}
       </div>
     </div>
   );
